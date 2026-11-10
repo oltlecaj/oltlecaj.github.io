@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Olt Lecaj Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Layout idea: an engineering drawing set. Each project is a "sheet" with a title block, a figure, and notes. */
+  --paper: #f6f7f5;
+  --sheet: #ffffff;
+  --ink: #1b2430;
+  --muted: #5b6672;
+  --line: #d5dbe0;
+  --accent: #1f4e79;
+  --accent-2: #c0392b;
+  --display: "IBM Plex Serif", Georgia, serif;
+  --body: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, "Courier New", monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+header.top { padding: 56px 0 36px; border-bottom: 1px solid var(--line); }
+.top h1 {
+  font-family: var(--display); font-weight: 600; font-size: clamp(2.2rem, 5vw, 3.2rem);
+  line-height: 1.1; margin: 0 0 10px; letter-spacing: -0.01em; text-wrap: balance;
+}
+.top .role { font-size: 1.1rem; color: var(--ink); margin: 0 0 6px; max-width: 62ch; }
+.top .meta { font-family: var(--mono); font-size: 0.85rem; color: var(--muted); margin: 0 0 18px; }
+.links { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 0.95rem; }
+.links span { color: var(--muted); }
+
+nav.toc { display: flex; flex-wrap: wrap; gap: 8px; padding: 18px 0 0; }
+nav.toc a {
+  font-family: var(--mono); font-size: 0.8rem; text-decoration: none; color: var(--ink);
+  border: 1px solid var(--line); background: var(--sheet); padding: 4px 10px; border-radius: 3px;
+}
+nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
+
+section.sheet {
+  background: var(--sheet); border: 1px solid var(--line); margin: 32px 0;
+}
+.titleblock {
+  display: grid; grid-template-columns: 1fr auto; gap: 4px 24px; align-items: end;
+  padding: 22px 26px 16px; border-bottom: 1px solid var(--line);
+}
+.titleblock .no { grid-column: 1 / -1; font-family: var(--mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+.titleblock h2 { font-family: var(--display); font-weight: 600; font-size: 1.55rem; line-height: 1.2; margin: 0; text-wrap: balance; }
+.titleblock .org { font-size: 0.95rem; color: var(--muted); margin: 2px 0 0; }
+.titleblock .date { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); white-space: nowrap; text-align: right; }
+.body { padding: 22px 26px 26px; display: grid; gap: 22px; }
+.body p { margin: 0; max-width: 68ch; }
+.cols { display: grid; grid-template-columns: 1.15fr 1fr; gap: 28px; align-items: start; }
+figure { margin: 0; }
+figure .frame { border: 1px solid var(--line); background: #fff; padding: 10px; overflow-x: auto; }
+figure img, figure svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 8px; max-width: 70ch; }
+h3 { font-size: 0.8rem; font-family: var(--mono); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 0 0 8px; }
+ul.notes { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; max-width: 68ch; }
+.stats { display: flex; flex-wrap: wrap; gap: 12px; }
+.stat { border-left: 3px solid var(--accent); padding: 4px 12px; min-width: 180px; }
+.stat b { display: block; font-family: var(--mono); font-size: 1.3rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 0.85rem; color: var(--muted); }
+.note { font-size: 0.85rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 12px; }
+
+.grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 32px; }
+.item b { display: block; }
+.item .sub { font-size: 0.9rem; color: var(--muted); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { font-family: var(--mono); font-size: 0.78rem; border: 1px solid var(--line); padding: 2px 8px; border-radius: 3px; background: var(--paper); }
+
+footer { padding: 10px 0 48px; color: var(--muted); font-size: 0.85rem; }
+
+/* SVG drawing styles */
+.dwg text { font-family: var(--mono); font-size: 12px; fill: var(--ink); }
+.dwg .lbl { font-size: 11px; fill: var(--muted); }
+.dwg .w { stroke: var(--ink); stroke-width: 2; fill: none; }
+.dwg .bus { stroke: var(--accent); stroke-width: 5; }
+.dwg .box { fill: #fff; stroke: var(--ink); stroke-width: 1.5; }
+.dwg .ctl { fill: #eef3f8; stroke: var(--accent); stroke-width: 1.5; }
+.dwg .sig { stroke: var(--accent); stroke-width: 1.4; fill: none; stroke-dasharray: 5 4; }
+
+@media (max-width: 760px) {
+  .cols, .grid2 { grid-template-columns: 1fr; }
+  .titleblock { grid-template-columns: 1fr; }
+  .titleblock .date { text-align: left; }
+  .body, .titleblock { padding-left: 16px; padding-right: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <h1>Olt Lecaj</h1>
+    <p class="role">Electrical engineering student focused on data center power distribution and power electronics.</p>
+    <p class="meta">B.S. Electrical Engineering, Manhattan University · Expected May 2028 · GPA 3.88/4.0</p>
+    <div class="links">
+      <a href="https://linkedin.com/in/olt-lecaj-90012832a">linkedin.com/in/olt-lecaj-90012832a</a>
+      <span>olecaj4@gmail.com</span>
+    </div>
+    <nav class="toc" aria-label="Projects">
+      <a href="#microgrid">01 DC microgrid testbed</a>
+      <a href="#fault-ml">02 Fault localization research</a>
+      <a href="#jll">03 JLL mission critical internship</a>
+      <a href="#leadership">04 Leadership &amp; skills</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- 01 -->
+<section class="sheet" id="microgrid">
+  <div class="titleblock">
+    <div class="no">Sheet 01 · Project</div>
+    <div>
+      <h2>Hybrid-Storage DC Microgrid Testbed</h2>
+      <p class="org">7x24 Exchange University Challenge · Bronx, NY · Team lead</p>
+    </div>
+    <div class="date">Sep 2026 – Present</div>
+  </div>
+  <div class="body">
+    <p>AI clusters swing their power draw hard and fast, and batteries degrade when they're made to follow every swing. This testbed is a bench-scale 48 V DC bus that pairs a battery with a supercapacitor: the supercapacitor takes the fast transients and the battery supplies the slow, steady part of the load. Cooling sits on the same bus as a controllable load. The end goal is a hardware-in-the-loop bench with a TI C2000 supervisory controller as the device under test.</p>
+
+    <figure>
+      <div class="frame">
+        <svg class="dwg" viewBox="0 0 860 330" role="img" aria-label="Block diagram: battery and supercapacitor each connect through a bidirectional converter to a 48 V DC bus that feeds an emulated AI load and cooling load; a supervisory controller sets the split between them.">
+          <!-- bus -->
+          <line class="bus" x1="300" y1="70" x2="300" y2="300"/>
+          <text x="282" y="58">48 V DC BUS</text>
+          <!-- battery -->
+          <rect class="box" x="30" y="90" width="110" height="56" rx="3"/>
+          <text x="48" y="114">Battery</text><text class="lbl" x="48" y="132">24 V</text>
+          <rect class="box" x="170" y="90" width="100" height="56" rx="3"/>
+          <text x="182" y="114">Converter</text><text class="lbl" x="182" y="132">half-bridge</text>
+          <line class="w" x1="140" y1="118" x2="170" y2="118"/><line class="w" x1="270" y1="118" x2="300" y2="118"/>
+          <!-- supercap -->
+          <rect class="box" x="30" y="214" width="110" height="56" rx="3"/>
+          <text x="48" y="238">Supercap</text><text class="lbl" x="48" y="256">24 V</text>
+          <rect class="box" x="170" y="214" width="100" height="56" rx="3"/>
+          <text x="182" y="238">Converter</text><text class="lbl" x="182" y="256">half-bridge</text>
+          <line class="w" x1="140" y1="242" x2="170" y2="242"/><line class="w" x1="270" y1="242" x2="300" y2="242"/>
+          <!-- loads -->
+          <rect class="box" x="360" y="90" width="150" height="56" rx="3"/>
+          <text x="374" y="114">AI rack load</text><text class="lbl" x="374" y="132">emulated step load</text>
+          <rect class="box" x="360" y="214" width="150" height="56" rx="3"/>
+          <text x="374" y="238">Cooling</text><text class="lbl" x="374" y="256">controllable load</text>
+          <line class="w" x1="300" y1="118" x2="360" y2="118"/><line class="w" x1="300" y1="242" x2="360" y2="242"/>
+          <!-- controller -->
+          <rect class="ctl" x="590" y="70" width="240" height="230" rx="3"/>
+          <text x="606" y="96">Supervisory controller</text>
+          <text class="lbl" x="606" y="116">(TI C2000, planned)</text>
+          <text class="lbl" x="606" y="150">Outer loop: bus voltage (PI)</text>
+          <text class="lbl" x="606" y="172">Inner loop: current (PI)</text>
+          <text class="lbl" x="606" y="194">Low-pass split:</text>
+          <text class="lbl" x="620" y="212">slow → battery</text>
+          <text class="lbl" x="620" y="230">fast → supercap</text>
+          <text class="lbl" x="606" y="256">SOC recovery (in progress)</text>
+          <text class="lbl" x="606" y="278">Load feedforward (in progress)</text>
+          <!-- signal lines -->
+          <path class="sig" d="M590 140 H560 V40 H220 V90"/>
+          <path class="sig" d="M590 260 H560 V312 H220 V270"/>
+          <text class="lbl" x="400" y="34">current command</text>
+          <text class="lbl" x="400" y="326">current command</text>
+        </svg>
+      </div>
+      <figcaption>System block diagram. Battery and supercapacitor ratings are from the current Typhoon HIL model; the physical bench is still being built.</figcaption>
+    </figure>
+
+    <div class="cols">
+      <div>
+        <h3>What I did</h3>
+        <ul class="notes">
+          <li>Modeled the converter in Typhoon HIL and designed a two-loop controller: a fast current loop inside a slower voltage loop.</li>
+          <li>Verified in simulation that the bus voltage holds steady through sudden load changes.</li>
+          <li>Specified the supervisory strategy from a literature survey of hybrid energy storage systems. The published architecture I started from omits state-of-charge feedback, which would eventually drain the supercapacitor. I'm adding SOC recovery and load feedforward to cut peak battery current and dI/dt.</li>
+          <li>Leading the chapter team building the controller.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Simulation result (Typhoon HIL)</h3>
+        <div class="stats">
+          <div class="stat"><b>±0.7%</b><span>bus deviation from 48 V under a 1.2 ↔ 2.4 A step load</span></div>
+          <div class="stat"><b>2.7 → 0.34 A</b><span>battery current swing (peak to peak), fast split vs slow split</span></div>
+        </div>
+      </div>
+    </div>
+
+    <figure>
+      <div class="frame"><img src="img/hess_sim.png" alt="Three stacked plots over 100 ms: a square-wave load current between 1.2 and 2.4 A, a bus voltage staying between 47.7 and 48.3 V, and inductor currents showing the battery current nearly flat with a 5 Hz split while the supercapacitor current follows the load steps." width="1440" height="1216"></div>
+      <figcaption>Exported from my Typhoon HIL captures. Moving the battery/supercapacitor split from 500 Hz to 5 Hz shifts the load steps onto the supercapacitor, so the battery sees a nearly flat current while the bus stays regulated.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="sheet" id="fault-ml">
+  <div class="titleblock">
+    <div class="no">Sheet 02 · Research</div>
+    <div>
+      <h2>Fault Localization and Classification in Power Distribution Systems</h2>
+      <p class="org">Jaspers Summer Research Scholars · Bronx, NY</p>
+    </div>
+    <div class="date">Jun 2026 – Present</div>
+  </div>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <p style="margin-bottom:16px">Utilities need to know quickly where a fault happened and what kind it was. Rooftop solar and other distributed generation make that harder, because current can now flow both ways on a feeder, and smart-meter data arrives with gaps. This project uses simulated fault data from a real utility feeder model to train models that localize and classify faults.</p>
+        <h3>Results</h3>
+        <div class="stats" style="margin-bottom:18px">
+          <div class="stat"><b>~90%+</b><span>fault-type classification accuracy</span></div>
+          <div class="stat"><b>~85%+</b><span>fault localization accuracy on bolted faults</span></div>
+        </div>
+        <h3>My part</h3>
+        <ul class="notes">
+          <li>Ran short-circuit simulations (LL, LG, LLG, and three-phase faults) on the EPRI Ckt7 distribution feeder in OpenDSS.</li>
+          <li>Engineered features from PMU and smart-meter data: symmetrical components and voltage/current magnitudes and angles.</li>
+          <li>Modeled realistic grid conditions with varying distributed generation penetration and smart-meter dropout rates, to capture bidirectional current flow and sparse data.</li>
+          <li>The machine learning pipeline (Random Forest and SVM classifiers, plus a distance regressor for fault location) was built with my research partner, Theodore Lodge, who led the ML side.</li>
+        </ul>
+      </div>
+      <figure>
+        <div class="frame"><img src="img/ckt7_feeder.png" alt="Map of the EPRI Ckt7 distribution feeder: a three-phase backbone running south from the substation with laterals branching off." ></div>
+        <figcaption>EPRI Ckt7 feeder plotted from the OpenDSS model's bus coordinates (primary backbone and laterals with coordinates).</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="sheet" id="jll">
+  <div class="titleblock">
+    <div class="no">Sheet 03 · Experience</div>
+    <div>
+      <h2>Mission Critical PDS Intern</h2>
+      <p class="org">Jones Lang LaSalle (JLL) · Yonkers, NY</p>
+    </div>
+    <div class="date">Jun 2026 – Aug 2026</div>
+  </div>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <ul class="notes">
+          <li>Produced an as-built electrical one-line diagram in AutoCAD for a 375 kW Con Edison data center, tracing power flow from two 4.16 kV utility feeds through switchgear, UPS, and PDU levels.</li>
+          <li>Authored Methods of Procedure (MOPs) for electrical equipment repair and infrared scanning, adopted by technicians and engineers for field execution.</li>
+          <li>Executed monthly generator load testing; logged and trended performance readings to verify backup-power readiness.</li>
+          <li>Supported electrical, mechanical, and thermal operations, including chiller inspections and daily critical-facility rounds.</li>
+        </ul>
+      </div>
+      <figure>
+        <div class="frame">
+          <svg class="dwg" viewBox="0 0 380 470" role="img" aria-label="Representative one-line diagram: two 4.16 kV utility feeds into switchgear, then through transformers to UPS and PDU levels feeding IT load.">
+            <!-- utility feeds -->
+            <text x="40" y="22">UTILITY A</text><text x="248" y="22">UTILITY B</text>
+            <text class="lbl" x="48" y="38">4.16 kV</text><text class="lbl" x="256" y="38">4.16 kV</text>
+            <line class="w" x1="80" y1="46" x2="80" y2="80"/><line class="w" x1="290" y1="46" x2="290" y2="80"/>
+            <!-- breakers -->
+            <rect class="box" x="70" y="80" width="20" height="20"/><rect class="box" x="280" y="80" width="20" height="20"/>
+            <line class="w" x1="80" y1="100" x2="80" y2="124"/><line class="w" x1="290" y1="100" x2="290" y2="124"/>
+            <!-- switchgear buses with tie -->
+            <line class="bus" x1="40" y1="124" x2="160" y2="124"/><line class="bus" x1="210" y1="124" x2="330" y2="124"/>
+            <line class="w" x1="160" y1="124" x2="175" y2="124"/><rect class="box" x="175" y="114" width="20" height="20"/><line class="w" x1="195" y1="124" x2="210" y2="124"/>
+            <text class="lbl" x="166" y="152">tie</text>
+            <text x="120" y="108">SWITCHGEAR</text>
+            <!-- transformers -->
+            <line class="w" x1="80" y1="124" x2="80" y2="170"/><line class="w" x1="290" y1="124" x2="290" y2="170"/>
+            <circle class="w" cx="80" cy="180" r="11"/><circle class="w" cx="80" cy="196" r="11"/>
+            <circle class="w" cx="290" cy="180" r="11"/><circle class="w" cx="290" cy="196" r="11"/>
+            <text class="lbl" x="98" y="192">XFMR</text><text class="lbl" x="308" y="192">XFMR</text>
+            <line class="w" x1="80" y1="207" x2="80" y2="250"/><line class="w" x1="290" y1="207" x2="290" y2="250"/>
+            <!-- UPS -->
+            <rect class="box" x="40" y="250" width="80" height="50" rx="3"/><rect class="box" x="250" y="250" width="80" height="50" rx="3"/>
+            <text x="64" y="280">UPS</text><text x="274" y="280">UPS</text>
+            <line class="w" x1="80" y1="300" x2="80" y2="340"/><line class="w" x1="290" y1="300" x2="290" y2="340"/>
+            <!-- PDU -->
+            <rect class="box" x="40" y="340" width="80" height="44" rx="3"/><rect class="box" x="250" y="340" width="80" height="44" rx="3"/>
+            <text x="64" y="367">PDU</text><text x="274" y="367">PDU</text>
+            <line class="w" x1="80" y1="384" x2="80" y2="420"/><line class="w" x1="290" y1="384" x2="290" y2="420"/>
+            <line class="w" x1="80" y1="420" x2="170" y2="420"/><line class="w" x1="290" y1="420" x2="210" y2="420"/>
+            <rect class="ctl" x="150" y="406" width="80" height="44" rx="3"/>
+            <text x="164" y="433">IT LOAD</text>
+          </svg>
+        </div>
+        <figcaption>Representative one-line drawn for this portfolio to show the power path I traced. It is not the site drawing, which stays with the client.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="sheet" id="leadership">
+  <div class="titleblock">
+    <div class="no">Sheet 04 · Leadership &amp; skills</div>
+    <div><h2>Leadership, Training, and Tools</h2></div>
+    <div class="date"></div>
+  </div>
+  <div class="body">
+    <div class="grid2">
+      <div class="item">
+        <b>President, 7x24 Exchange Student Chapter</b>
+        <span class="sub">Manhattan University · Sep 2026 – Present</span>
+        <p style="margin-top:6px">Organized an NFPA 70E electrical safety training open to all mechanical and electrical engineering students; participants received a certificate of completion. Coordinating guest speakers, conferences, and networking events, and leading the University Challenge team.</p>
+      </div>
+      <div class="item">
+        <b>Vice President, IEEE</b>
+        <span class="sub">Manhattan University · Sep 2026 – Present</span>
+        <p style="margin-top:6px">Coordinating events, scholarship opportunities, and conferences for members.</p>
+        <p style="margin-top:10px"><b>Eta Kappa Nu</b> <span class="sub">Member, tutor 3 hrs/week</span></p>
+        <p><b>Tau Beta Pi</b> <span class="sub">Member</span></p>
+      </div>
+      <div>
+        <h3>Tools</h3>
+        <div class="tags">
+          <span>AutoCAD</span><span>OpenDSS</span><span>Typhoon HIL</span><span>MATLAB</span><span>Python</span><span>C / C++</span><span>Oscilloscopes</span><span>Multimeters</span><span>Excel</span>
+        </div>
+      </div>
+      <div>
+        <h3>Safety training</h3>
+        <div class="tags">
+          <span>QEW202 Arc Flash</span><span>NFPA 70E Electrical Safety</span><span>FE exam: June 2027</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer><div class="wrap">Olt Lecaj · Updated November 2026</div></footer>
+</body>
+</html>

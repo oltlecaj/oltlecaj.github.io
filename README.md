@@ -10,4 +10,4 @@ This repository holds the source for the site. Open the link above to see the pr
 - Fault Localization and Classification in Power Distribution Systems (OpenDSS, EPRI Ckt7)
 - Mission Critical PDS Internship, JLL
 
-Résumé: [OltLecaj_Resume.pdf](OltLecaj_Resume.pdf)
+
